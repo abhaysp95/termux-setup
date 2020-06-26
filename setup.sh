@@ -37,8 +37,7 @@ function set_pass() {
 set_pass
 
 function update_upgrade() {
-	apt update 2> /dev/null
-	apt upgrade 2> /dev/null
+	apt update 2> /dev/null && apt -y upgrade 2> /dev/null
 }
 
 echo
