@@ -15,7 +15,7 @@ echo -e $G"   │$R╺┳╸┏━╸┏━┓┏┳┓╻ ╻╻ ╻   $B┏━
 echo -e $G"   │$R ┃ ┣╸ ┣┳┛┃┃┃┃ ┃┏╋┛$Y╺━━$B┗━┓┣╸  ┃ ┃ ┃┣╸┛$G│"
 echo -e $G"   │$R ╹ ┗━╸╹┗╸╹ ╹┗━┛╹ ╹   $B┗━┛┗━╸ ╹ ┗━┛╹  $G│"
 echo -e $G"   └────────────────────────────────────┘"
-echo -e $G"     [$R*$G]--> By$Y ABHAY$C SHANKER$B PATHAK"
+echo -e $G"     [$R*$G]--> By$Y ABHAY$C SHANKER$Y PATHAK"
 echo
 # ┳┛
 
@@ -100,47 +100,76 @@ if [ -n "${update_again}" ]; then
 	fi
 fi
 
+echo
 echo -e $Y"Setting up storage settings"
 echo -e $G"Grant the permission"
 
-if termux-storage-setup; then
+if [ -d ~/storage ]; then
+  echo
+  echo -e $G"Storage is already setup, proceeding further"
+else
+  echo
+  termux-storage-setup
 	echo -e $Y"Storage setup successful"
 	echo -e $W"Created a folder named storage"
-else
-	echo -e $R"Storage setup failed, proceeding further$W"
 fi
 
 if [ "${update_errcd}" -ne 0 ]; then
+	echo
 	echo -e $G"Installing some basic softwares$W"
 	ins_pro=0
 else
 	ins_pro=1
+	echo
 	echo -e $R"Program installations has been skipped"
 fi
 
 function install_programs() {
+	echo
+	echo -e $Y"Installing man"
+	apt install -y man
+
+	echo
 	echo -e $Y"Installing text editors$W"
 	apt install -y neovim nano
 
+	echo
 	echo -e $Y"Installing language & tools$W"
 	apt install -y coreutils python3 make libllvm llvm libcrypt-dev
 
-	echo -e $Y"Installing tools to retrieve and transfer data"
+	echo
+	echo -e $Y"Installing tools to retrieve and transfer data$W"
 	apt install -y curl wget aria2
 
-	echo -e $Y"Installing a nice file manager"
+	echo
+	echo -e $Y"Installing a nice file manager$W"
 	apt install -y lf
 
-	echo -e $Y"Installing termux specific tools"
-	apt install -y termux-exec proot
+	echo
+	echo -e $Y"Installing termux specific tools$W"
+	apt install -y termux-exec proot tsu
 
-	echo -e $Y"Installing ssh suite"
-	apt install -y ssh
+	echo
+	echo -e $Y"Installing network and sharing tools$W"
+	apt install -y openssh nmap dnsutils
 }
 
 if [ "${ins_pro}" -eq 0 ]; then
 	install_programs
 fi
 
+echo $B"  ** Installing termux-setup **  "$W
+[ ! -d "$HOME"/.termux ] && mkdir "$HOME"/.termux
+
+cp "$CDIR"/materials.tar.gz "$PREFIX"/share
+echo -e $Y"  =>  Extracting data..."$W
+tar xvzf "$PREFIX"/share/materials.tar.gz -C "$PREFIX"/share
+chmod 755 "$PREFIX"/share/termux-setup/tsetup
+ln -s "$PREFIX"/share/termux-setup/tsetup "$PREFIX"/bin/termux-setup
+rm "$PREFIX"/share/materials.tar.gz
+
+echo
+echo -e $C"Initial Setup Complete"
 echo -e $G"For further setup, type$Y 'termux-setup'$W"
-echo -e $Y"Exiting Now"
+echo -e $Y"Exiting Now$W"
+echo
