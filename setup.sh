@@ -21,27 +21,39 @@ echo
 
 echo -e "$B  Setting the script"
 
-echo "Would you want to provide your termux a password"
+logfile="${HOME}/.setup_log"
+
+echo "Would you want to provide your termux a password" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 echo -e $G"y$W or$R n$W"
 read -rn1 pass
 echo
 
 function set_pass() {
 	if [ "$pass" = "y" ]; then
-		echo "yes"
+		echo "yes" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 	else
-		echo "no"
+		echo "no" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 	fi
 }
 
 set_pass
 
 function update_upgrade() {
-	apt update 2> /dev/null && apt -y upgrade 2> /dev/null
+	apt update 2> /dev/null && apt -y upgrade 2> /dev/null \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 }
 
 echo
-echo -e $G"Updating Termux$W"
+echo -e $G"Updating Termux$W" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 echo
 
 count=0
@@ -49,10 +61,16 @@ function check_update() {
 	update_errcd=1
 	if ! update_upgrade; then
 		update_errcd="$?"
-		echo "error ${update_errcd}"
+		echo "error ${update_errcd}" \
+		| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+		| tee -a "${logfile}"
 		count=$(( count + 1 ))
-		echo -e $R"Updation failed$W, check if internet connection is active"
-		echo "It's recommended to update if it's the first time"
+		echo -e $R"Updation failed$W, check if internet connection is active" \
+		| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+		| tee -a "${logfile}"
+		echo "It's recommended to update if it's the first time" \
+		| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+		| tee -a "${logfile}"
 	fi
 }
 
@@ -60,10 +78,16 @@ check_update
 
 function check_update2() {
 	if [ "${update_errcd}" -eq 1 ]; then
-		echo -e $G"Update Succesful"
+		echo -e $G"Update Succesful" \
+		| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+		| tee -a "${logfile}"
 	else
-		echo "Try again or Skip"
-		echo -e $G"y$W or$R s$W"
+		echo "Try again or Skip" \
+		| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+		| tee -a "${logfile}"
+		echo -e $G"y$W or$R s$W" \
+		| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+		| tee -a "${logfile}"
 		read -rn1 update_again
 	fi
 }
@@ -80,78 +104,128 @@ if [ -n "${update_again}" ]; then
 			check_update2
 			#echo "${count}"
 		else
-			echo "You choose to skip"
+			echo "You choose to skip" \
+			| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+			| tee -a "${logfile}"
 			break
 		fi
 		#echo "inside while"
 		#echo "${update_again}"
 	done
 	if [ "${count}" -ge 3 ]; then
-		echo -e $R"Skipping$W for Now, or do you want to quit"
+		echo -e $R"Skipping$W for Now, or do you want to quit" \
+		| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+		| tee -a "${logfile}"
 		echo -e $G"s$W or$R q$W"
 		read -rn1 if_skip
 		if [ "${if_skip}" = q ]; then
-			echo -e $Y"Exiting Now, BYE$W"
+			echo -e $Y"Exiting Now, BYE$W" \
+			| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+			| tee -a "${logfile}"
 			exit
 		else
-			echo "Tried, more than 3 times. NOW, "
-			echo -e $G"SKIPPING$W"
+			echo "Tried, more than 3 times. NOW, " \
+			| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+			| tee -a "${logfile}"
+			echo -e $G"SKIPPING$W" \
+			| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+			| tee -a "${logfile}"
 		fi
 	fi
 fi
 
 echo
-echo -e $Y"Setting up storage settings"
-echo -e $G"Grant the permission"
+echo -e $Y"Setting up storage settings" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+echo -e $G"Grant the permission" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 
 if [ -d ~/storage ]; then
   echo
-  echo -e $G"Storage is already setup, proceeding further"
+  echo -e $G"Storage is already setup, proceeding further" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 else
   echo
   termux-storage-setup
-	echo -e $Y"Storage setup successful"
-	echo -e $W"Created a folder named storage"
+	echo -e $Y"Storage setup successful" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+	echo -e $W"Created a folder named storage" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 fi
 
 if [ "${update_errcd}" -ne 0 ]; then
 	echo
-	echo -e $G"Installing some basic softwares$W"
+	echo -e $G"Installing some basic softwares$W" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 	ins_pro=0
 else
 	ins_pro=1
 	echo
-	echo -e $R"Program installations has been skipped"
+	echo -e $R"Program installations has been skipped" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 fi
 
 function install_programs() {
 	echo
-	echo -e $Y"Installing man"
-	apt install -y man
+	echo -e $Y"Installing man" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+	apt install -y man \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 
 	echo
-	echo -e $Y"Installing text editors$W"
-	apt install -y neovim nano
+	echo -e $Y"Installing text editors$W" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+	apt install -y neovim nano \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 
 	echo
-	echo -e $Y"Installing language & tools$W"
-	apt install -y coreutils python3 make libllvm llvm libcrypt-dev
+	echo -e $Y"Installing language & tools$W" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+	apt install -y coreutils python make libllvm llvm libcrypt-dev \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 
 	echo
-	echo -e $Y"Installing tools to retrieve and transfer data$W"
+	echo -e $Y"Installing tools to retrieve and transfer data$W" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 	apt install -y curl wget aria2
 
 	echo
-	echo -e $Y"Installing a nice file manager$W"
-	apt install -y lf
+	echo -e $Y"Installing a nice file manager$W" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+	apt install -y lf \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 
 	echo
-	echo -e $Y"Installing termux specific tools$W"
-	apt install -y termux-exec proot tsu
+	echo -e $Y"Installing termux specific tools$W" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+	apt install -y termux-exec proot tsu \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 
 	echo
-	echo -e $Y"Installing network and sharing tools$W"
-	apt install -y openssh nmap dnsutils
+	echo -e $Y"Installing network and sharing tools$W" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+	apt install -y openssh nmap dnsutils \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 }
 
 if [ "${ins_pro}" -eq 0 ]; then
@@ -159,14 +233,28 @@ if [ "${ins_pro}" -eq 0 ]; then
 fi
 
 echo $B"  ** Installing termux-setup **  "$W
-[ ! -d "$HOME"/.termux ] && mkdir "$HOME"/.termux
+[ ! -d "$HOME"/.termux ] && mkdir "$HOME"/.termux \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 
-cp "$CDIR"/materials.tar.gz "$PREFIX"/share
-echo -e $Y"  =>  Extracting data..."$W
-tar xvzf "$PREFIX"/share/materials.tar.gz -C "$PREFIX"/share
-chmod 755 "$PREFIX"/share/termux-setup/tsetup
-ln -s "$PREFIX"/share/termux-setup/tsetup "$PREFIX"/bin/termux-setup
-rm "$PREFIX"/share/materials.tar.gz
+cp "$CDIR"/materials.tar.gz "$PREFIX"/share \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+echo -e $Y"  =>  Extracting data..."$W \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+tar xvzf "$PREFIX"/share/materials.tar.gz -C "$PREFIX"/share \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+chmod 755 "$PREFIX"/share/termux-setup/tsetup \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+ln -sv "$PREFIX"/share/termux-setup/tsetup "$PREFIX"/bin/termux-setup \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
+rm -v "$PREFIX"/share/materials.tar.gz \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 
 echo
 echo -e $C"Initial Setup Complete"
