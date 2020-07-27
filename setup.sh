@@ -257,7 +257,9 @@ rm -v "$PREFIX"/share/materials.tar.gz \
 	| tee -a "${logfile}"
 
 echo
-echo -e $C"Initial Setup Complete"
+echo -e $C"Initial Setup Complete" \
+	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
+	| tee -a "${logfile}"
 echo -e $G"For further setup, type$Y 'termux-setup'$W"
 echo -e $Y"Exiting Now$W"
 echo
