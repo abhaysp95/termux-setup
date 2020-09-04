@@ -39,10 +39,10 @@ echo >&3
 function set_pass() {
 	if [ "$pass" = "y" ]; then
 		date "+%Y:%m:%d %H:%M:%s"
-		echo "yes" >&3
+		passwd >&3
 	else
 		date "+%Y:%m:%d %H:%M:%s"
-		echo "no" >&3
+		echo "You can also set password later" >&3
 	fi
 }
 
