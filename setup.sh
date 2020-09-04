@@ -149,7 +149,7 @@ if [ -d ~/storage ]; then
 	| tee -a "${logfile}"
 else
   echo
-  termux-storage-setup
+  termux-setup-storage
 	echo -e $Y"Storage setup successful" \
 	| sed -e "s/^/$(printf "%s\t" "$(date "+%Y:%m:%d %H:%M:%s")")/" \
 	| tee -a "${logfile}"
