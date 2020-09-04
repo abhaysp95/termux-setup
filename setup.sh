@@ -164,7 +164,7 @@ function install_programs() {
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing text editors$W" >&3
-	apt-get install -y neovim nano \ >&3
+	apt-get install -y neovim nano >&3
 
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
