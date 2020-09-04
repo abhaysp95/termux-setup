@@ -32,7 +32,7 @@ echo -e "$B  Setting the script" >&3
 
 date "+Y:%m:%d %H:%M:%s"
 echo "Would you want to provide your termux a password" >&3
-echo -e $G"y$W or$R n$W"
+echo -e $G"y$W or$R n$W" >&3
 read -rn1 pass
 echo >&3
 
@@ -164,7 +164,7 @@ function install_programs() {
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing text editors$W" >&3
-	apt-get install -y neovim nano \
+	apt-get install -y neovim nano \ >&3
 
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
@@ -175,7 +175,7 @@ function install_programs() {
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing tools to retrieve and transfer data$W" >&3
-	apt-get install -y curl wget aria2
+	apt-get install -y curl wget aria2 >&3
 
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
