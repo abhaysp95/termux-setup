@@ -193,7 +193,7 @@ function install_programs() {
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing network and sharing tools$W" >&3
 	date "+%Y:%m:%d %H:%M:%s"
-	apt-get install -y openssh nmap dnsutils >&3
+	apt-get install -y openssh rsync nmap dnsutils >&3
 }
 
 if [ "${ins_pro}" -eq 0 ]; then
