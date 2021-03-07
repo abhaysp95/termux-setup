@@ -159,41 +159,53 @@ function install_programs() {
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing man"$W >&3
-	apt-get install -y man >&3
+	apt install -y man >&3
 
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing text editors$W" >&3
-	apt-get install -y neovim nano >&3
+	apt install -y neovim nano >&3
 
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing language & tools$W" >&3
 	date "+%Y:%m:%d %H:%M:%s"
-	apt-get install -y coreutils python make libllvm llvm libcrypt >&3
+	apt install -y coreutils python make libllvm llvm libcrypt >&3
 
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing tools to retrieve and transfer data$W" >&3
-	apt-get install -y curl wget aria2 >&3
+	apt install -y curl wget aria2 >&3
 
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing a nice file manager$W" >&3
 	date "+%Y:%m:%d %H:%M:%s"
-	apt-get install -y nnn >&3
+	apt install -y nnn >&3
 
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing termux specific tools$W" >&3
 	date "+%Y:%m:%d %H:%M:%s"
-	apt-get install -y termux-exec proot tsu >&3
+	apt install -y termux-exec proot tsu >&3
 
 	echo >&3
 	date "+%Y:%m:%d %H:%M:%s"
 	echo -e $Y"Installing network and sharing tools$W" >&3
 	date "+%Y:%m:%d %H:%M:%s"
-	apt-get install -y openssh rsync nmap dnsutils >&3
+	apt install -y openssh rsync nmap dnsutils >&3
+
+	echo >&3
+	date "+%Y:%m:%d %H:%M:%s"
+	echo -e $Y"Installing editing tools$W" >&3
+	date "+%Y:%m:%d %H:%M:%s"
+	apt install -y ffmpeg imagemagick >&3
+
+	echo >&3
+	date "+%Y:%m:%d %H:%M:%s"
+	echo -e $Y"Installing youtube-dl$W">&3
+	date "+%Y:%m:%d %H:%M:%s"
+	pip3 install --user youtube-dl >&3
 }
 
 if [ "${ins_pro}" -eq 0 ]; then
